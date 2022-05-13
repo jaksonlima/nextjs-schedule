@@ -63,8 +63,9 @@ function monthCellRender(value) {
 function Calendar_() {
   return (
     <Calendar
-      dateCellRender={dateCellRender}
-      monthCellRender={monthCellRender}
+    // locale={locale}
+    // dateCellRender={dateCellRender}
+    // monthCellRender={monthCellRender}
     />
   );
 }
