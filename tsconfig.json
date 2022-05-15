@@ -19,7 +19,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/Calendar/index.jsx"
+    "src/components/Calendar/index.jsx",
+    "src/store/index.ts",
+    "src/pages/index.tsx"
   ],
   "exclude": ["node_modules"]
 }
