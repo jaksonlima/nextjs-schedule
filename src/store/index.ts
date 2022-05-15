@@ -3,6 +3,7 @@ import createSagaMiddleware, { Task } from "redux-saga";
 import { configureStore, applyMiddleware, Store } from "@reduxjs/toolkit";
 import Immutable from "seamless-immutable";
 
+import { loggerNext } from "../middlewares/loggerReduxSagaNext";
 import rootReducer from "./root-redux";
 import rootSaga from "./root-saga";
 
@@ -23,7 +24,7 @@ const makeStore = () => {
 
   const store = configureStore({
     reducer: hydrate,
-    enhancers: [applyMiddleware(sagaMiddleware)],
+    enhancers: [applyMiddleware(sagaMiddleware, loggerNext)],
     devTools: process.env.NODE_ENV === "development",
   });
 

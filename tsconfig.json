@@ -21,7 +21,8 @@
     "**/*.tsx",
     "src/components/Calendar/index.jsx",
     "src/store/index.ts",
-    "src/pages/index.tsx"
+    "src/pages/index.tsx",
+    "src/pages/_document.tsx"
   ],
   "exclude": ["node_modules"]
 }

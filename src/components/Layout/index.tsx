@@ -1,20 +1,67 @@
+import React, { useState } from "react";
+import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import {
   DesktopOutlined,
+  PieChartOutlined,
   TeamOutlined,
   UserOutlined,
-  LogoutOutlined,
   EditOutlined,
+  LogoutOutlined,
   UserAddOutlined,
+  GoldOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
 
 const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+
+type MenuItem = Required<MenuProps>["items"][number];
 
 interface SiderDemoProps {
-  children: any;
+  children: JSX.Element;
 }
+
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[]
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  } as MenuItem;
+}
+
+const itemsSideBar: MenuItem[] = [
+  getItem("Relatório", "1", <PieChartOutlined />),
+  getItem("Caixa", "2", <DesktopOutlined />),
+  getItem("Usuário", "sub1", <UserOutlined />, [
+    getItem("Editar", "3", <EditOutlined />),
+    getItem("Cadastrar", "4", <UserAddOutlined />),
+  ]),
+  getItem("Equipe", "sub2", <TeamOutlined />, [
+    getItem("Editar", "5", <EditOutlined />),
+    getItem("Cadastrar", "6", <UserAddOutlined />),
+  ]),
+  getItem("Serviço", "sub3", <ShoppingOutlined />, [
+    getItem("Editar", "7", <EditOutlined />),
+    getItem("Cadastrar", "8", <UserAddOutlined />),
+  ]),
+  getItem("Produto", "sub4", <GoldOutlined />, [
+    getItem("Editar", "9", <EditOutlined />),
+    getItem("Cadastrar", "10", <UserAddOutlined />),
+  ]),
+];
+
+const itemsHeader: MenuItem[] = [
+  getItem("Jakson", "sub1", <UserOutlined />, [
+    getItem("Editar Perfil", "1", <EditOutlined />),
+    getItem("Sair", "2", <LogoutOutlined />),
+  ]),
+];
 
 function SiderDemo({ children }: SiderDemoProps) {
   const [collapsed, setCollapsed] = useState(true);
@@ -24,44 +71,29 @@ function SiderDemo({ children }: SiderDemoProps) {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+        <div
+          className="logo"
+          style={{
+            height: "32px",
+            margin: "16px",
+            background: "rgba(255, 255, 255, 0.3)",
+          }}
+        />
         <Menu
           theme="dark"
           defaultSelectedKeys={["1"]}
           mode="inline"
-          style={{
-            position: "sticky",
-            top: "0",
-          }}
-        >
-          <Menu.Item key="1" icon={<DesktopOutlined />}>
-            Caixa
-          </Menu.Item>
-          <SubMenu key="sub2" icon={<TeamOutlined />} title="Usuários">
-            <Menu.Item key="2" icon={<EditOutlined />}>
-              Editar
-            </Menu.Item>
-            <Menu.Item key="3" icon={<UserAddOutlined />}>
-              Cadastrar
-            </Menu.Item>
-          </SubMenu>
-        </Menu>
+          items={itemsSideBar}
+        />
       </Sider>
       <Layout>
         <Header style={{ background: "#fff" }}>
           <Menu
             mode="horizontal"
-            defaultSelectedKeys={["4"]}
+            defaultSelectedKeys={["2"]}
             style={{ justifyContent: "flex-end" }}
-          >
-            <SubMenu key="sub3" icon={<UserOutlined />} title="Jakson">
-              <Menu.Item key="4" icon={<EditOutlined />}>
-                Editar Perfil
-              </Menu.Item>
-              <Menu.Item key="5" icon={<LogoutOutlined />}>
-                Sair
-              </Menu.Item>
-            </SubMenu>
-          </Menu>
+            items={itemsHeader}
+          ></Menu>
         </Header>
         <Content style={{ margin: "4px 16px" }}>
           <div style={{ padding: 24, background: "#fff" }}>{children}</div>
