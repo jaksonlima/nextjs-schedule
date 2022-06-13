@@ -1,7 +1,7 @@
-import { BadgeProps, Button, Modal } from "antd";
-import { Badge, Calendar } from "antd";
+import type { BadgeProps } from "antd";
+import { Badge, Calendar, Card } from "antd";
 import type { Moment } from "moment";
-import React, { useState } from "react";
+import React from "react";
 
 const getListData = (value: Moment) => {
   let listData;
@@ -22,7 +22,11 @@ const getListData = (value: Moment) => {
     case 15:
       listData = [
         { type: "warning", content: "This is warning event" },
-        { type: "success", content: "This is very long usual event。。...." },
+        {
+          type: "success",
+          content:
+            "This is very long usual event This is very long usual event。。....",
+        },
         { type: "error", content: "This is error event 1." },
         { type: "error", content: "This is error event 2." },
         { type: "error", content: "This is error event 3." },
@@ -40,38 +44,16 @@ const getMonthData = (value: Moment) => {
   }
 };
 
-const onSelect = (newValue: Moment) => {
-  console.log("onSelect ", newValue);
-};
-
-const onPanelChange = (newValue: Moment) => {
-  console.log("onPanelChange ", newValue);
-};
-
-const AppModal: React.FC = () => {
-  const [modal2Visible, setModal2Visible] = useState(false);
-  return (
-    <>
-      <div onClick={() => setModal2Visible(true)}>D</div>
-      <Modal
-        title="Vertically centered modal dialog"
-        centered
-        visible={modal2Visible}
-        onOk={() => setModal2Visible(false)}
-        onCancel={() => setModal2Visible(false)}
-      >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
-      </Modal>
-    </>
-  );
-};
 const App: React.FC = () => {
   const monthCellRender = (value: Moment) => {
     const num = getMonthData(value);
     return num ? (
-      <div className="notes-month">
+      <div
+        style={{
+          fontSize: "28px",
+          textAlign: "center",
+        }}
+      >
         <section>{num}</section>
         <span>Backlog number</span>
       </div>
@@ -81,14 +63,26 @@ const App: React.FC = () => {
   const dateCellRender = (value: Moment) => {
     const listData = getListData(value);
     return (
-      <ul className="events">
+      <ul
+        style={{
+          margin: 0,
+          padding: 0,
+          listStyle: "none",
+          width: "100%",
+          overflow: "hidden",
+          fontSize: "12px",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+        }}
+      >
         {listData.map((item) => (
-          <li key={item.content} style={{ listStyle: "none" }}>
-            <Badge
+          <li key={item.content}>
+            {/* <Badge
               status={item.type as BadgeProps["status"]}
               text={item.content}
-            />
-            <AppModal />
+            >
+            </Badge> */}
+            <CardSchedule />
           </li>
         ))}
       </ul>
@@ -96,16 +90,23 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
-      <AppModal />
-      <Calendar
-        dateCellRender={dateCellRender}
-        monthCellRender={monthCellRender}
-        onSelect={onSelect}
-        onPanelChange={onPanelChange}
-      />
-    </>
+    <Calendar
+      dateCellRender={dateCellRender}
+      monthCellRender={monthCellRender}
+    />
   );
 };
+
+const CardSchedule: React.FC = () => (
+  <Card.Grid
+    style={{
+      width: "100%",
+      height: "1px",
+      textAlign: "center",
+    }}
+  >
+    Content
+  </Card.Grid>
+);
 
 export default App;

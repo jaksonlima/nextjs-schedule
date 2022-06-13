@@ -38,9 +38,9 @@ function getItem(
 }
 
 const itemsSideBar: MenuItem[] = [
-  getItem("Relatório", "1", <PieChartOutlined />),
+  getItem("Agenda", "1", <PieChartOutlined />),
   getItem("Caixa", "2", <DesktopOutlined />),
-  getItem("Usuário", "sub1", <UserOutlined />, [
+  getItem("Cliente", "sub1", <UserOutlined />, [
     getItem("Editar", "3", <EditOutlined />),
     getItem("Cadastrar", "4", <UserAddOutlined />),
   ]),
